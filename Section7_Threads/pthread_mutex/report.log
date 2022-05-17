@@ -1,0 +1,184 @@
+==5659== Helgrind, a thread error detector
+==5659== Copyright (C) 2007-2017, and GNU GPL'd, by OpenWorks LLP et al.
+==5659== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==5659== Command: ./main
+==5659== Parent PID: 3823
+==5659== 
+==5659== error calling PR_SET_PTRACER, vgdb might block
+==5659== ---Thread-Announcement------------------------------------------
+==5659== 
+==5659== Thread #2 was created
+==5659==    at 0x499D152: clone (clone.S:71)
+==5659==    by 0x48622EB: create_thread (createthread.c:101)
+==5659==    by 0x4863E0F: pthread_create@@GLIBC_2.2.5 (pthread_create.c:817)
+==5659==    by 0x4842917: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x109628: main (main.c:94)
+==5659== 
+==5659== ----------------------------------------------------------------
+==5659== 
+==5659== Thread #2: Attempt to re-lock a non-recursive lock I already hold
+==5659==    at 0x483FE16: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x10933A: Balance (main.c:31)
+==5659==    by 0x109559: Thread (main.c:72)
+==5659==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x4863608: start_thread (pthread_create.c:477)
+==5659==    by 0x499D162: clone (clone.S:95)
+==5659==  Lock was previously acquired
+==5659==    at 0x483FEDF: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x1093C2: Withdraw (main.c:46)
+==5659==    by 0x109531: Thread (main.c:71)
+==5659==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x4863608: start_thread (pthread_create.c:477)
+==5659==    by 0x499D162: clone (clone.S:95)
+==5659== 
+==5659== ---Thread-Announcement------------------------------------------
+==5659== 
+==5659== Thread #3 was created
+==5659==    at 0x499D152: clone (clone.S:71)
+==5659==    by 0x48622EB: create_thread (createthread.c:101)
+==5659==    by 0x4863E0F: pthread_create@@GLIBC_2.2.5 (pthread_create.c:817)
+==5659==    by 0x4842917: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x109628: main (main.c:94)
+==5659== 
+==5659== ----------------------------------------------------------------
+==5659== 
+==5659== Possible data race during write of size 1 at 0x5274196 by thread #3
+==5659== Locks held: none
+==5659==    at 0x48488A6: mempcpy (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x490D661: _IO_new_file_xsputn (fileops.c:1236)
+==5659==    by 0x490D661: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1197)
+==5659==    by 0x48F49A1: __vfprintf_internal (vfprintf-internal.c:1373)
+==5659==    by 0x48DFD6E: printf (printf.c:33)
+==5659==    by 0x109502: Thread (main.c:67)
+==5659==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x4863608: start_thread (pthread_create.c:477)
+==5659==    by 0x499D162: clone (clone.S:95)
+==5659== 
+==5659== This conflicts with a previous write of size 1 by thread #2
+==5659== Locks held: none
+==5659==    at 0x48488A6: mempcpy (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x490D661: _IO_new_file_xsputn (fileops.c:1236)
+==5659==    by 0x490D661: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1197)
+==5659==    by 0x48F49A1: __vfprintf_internal (vfprintf-internal.c:1373)
+==5659==    by 0x48DFD6E: printf (printf.c:33)
+==5659==    by 0x109587: Thread (main.c:72)
+==5659==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x4863608: start_thread (pthread_create.c:477)
+==5659==    by 0x499D162: clone (clone.S:95)
+==5659==  Address 0x5274196 is 6 bytes inside a block of size 1,024 alloc'd
+==5659==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x48FFD33: _IO_file_doallocate (filedoalloc.c:101)
+==5659==    by 0x490FEFF: _IO_doallocbuf (genops.c:347)
+==5659==    by 0x490EF5F: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:745)
+==5659==    by 0x490D6E4: _IO_new_file_xsputn (fileops.c:1244)
+==5659==    by 0x490D6E4: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1197)
+==5659==    by 0x48F49A1: __vfprintf_internal (vfprintf-internal.c:1373)
+==5659==    by 0x48DFD6E: printf (printf.c:33)
+==5659==    by 0x109502: Thread (main.c:67)
+==5659==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x4863608: start_thread (pthread_create.c:477)
+==5659==    by 0x499D162: clone (clone.S:95)
+==5659==  Block was alloc'd by thread #2
+==5659== 
+==5659== ----------------------------------------------------------------
+==5659== 
+==5659== Possible data race during write of size 1 at 0x5274197 by thread #3
+==5659== Locks held: none
+==5659==    at 0x48488CC: mempcpy (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x490D661: _IO_new_file_xsputn (fileops.c:1236)
+==5659==    by 0x490D661: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1197)
+==5659==    by 0x48F57DC: __vfprintf_internal (vfprintf-internal.c:1687)
+==5659==    by 0x48DFD6E: printf (printf.c:33)
+==5659==    by 0x109502: Thread (main.c:67)
+==5659==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x4863608: start_thread (pthread_create.c:477)
+==5659==    by 0x499D162: clone (clone.S:95)
+==5659== 
+==5659== This conflicts with a previous write of size 1 by thread #2
+==5659== Locks held: none
+==5659==    at 0x48488A6: mempcpy (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x490D661: _IO_new_file_xsputn (fileops.c:1236)
+==5659==    by 0x490D661: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1197)
+==5659==    by 0x48F57DC: __vfprintf_internal (vfprintf-internal.c:1687)
+==5659==    by 0x48DFD6E: printf (printf.c:33)
+==5659==    by 0x109587: Thread (main.c:72)
+==5659==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x4863608: start_thread (pthread_create.c:477)
+==5659==    by 0x499D162: clone (clone.S:95)
+==5659==  Address 0x5274197 is 7 bytes inside a block of size 1,024 alloc'd
+==5659==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x48FFD33: _IO_file_doallocate (filedoalloc.c:101)
+==5659==    by 0x490FEFF: _IO_doallocbuf (genops.c:347)
+==5659==    by 0x490EF5F: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:745)
+==5659==    by 0x490D6E4: _IO_new_file_xsputn (fileops.c:1244)
+==5659==    by 0x490D6E4: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1197)
+==5659==    by 0x48F49A1: __vfprintf_internal (vfprintf-internal.c:1373)
+==5659==    by 0x48DFD6E: printf (printf.c:33)
+==5659==    by 0x109502: Thread (main.c:67)
+==5659==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x4863608: start_thread (pthread_create.c:477)
+==5659==    by 0x499D162: clone (clone.S:95)
+==5659==  Block was alloc'd by thread #2
+==5659== 
+==5659== ----------------------------------------------------------------
+==5659== 
+==5659== Possible data race during write of size 1 at 0x52741A8 by thread #3
+==5659== Locks held: none
+==5659==    at 0x48488A6: mempcpy (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x490D661: _IO_new_file_xsputn (fileops.c:1236)
+==5659==    by 0x490D661: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1197)
+==5659==    by 0x48F5015: __vfprintf_internal (vfprintf-internal.c:1719)
+==5659==    by 0x48DFD6E: printf (printf.c:33)
+==5659==    by 0x109502: Thread (main.c:67)
+==5659==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x4863608: start_thread (pthread_create.c:477)
+==5659==    by 0x499D162: clone (clone.S:95)
+==5659== 
+==5659== This conflicts with a previous write of size 1 by thread #2
+==5659== Locks held: none
+==5659==    at 0x48488A6: mempcpy (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x490D661: _IO_new_file_xsputn (fileops.c:1236)
+==5659==    by 0x490D661: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1197)
+==5659==    by 0x48F5015: __vfprintf_internal (vfprintf-internal.c:1719)
+==5659==    by 0x48DFD6E: printf (printf.c:33)
+==5659==    by 0x109587: Thread (main.c:72)
+==5659==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x4863608: start_thread (pthread_create.c:477)
+==5659==    by 0x499D162: clone (clone.S:95)
+==5659==  Address 0x52741a8 is 24 bytes inside a block of size 1,024 alloc'd
+==5659==    at 0x483C893: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x48FFD33: _IO_file_doallocate (filedoalloc.c:101)
+==5659==    by 0x490FEFF: _IO_doallocbuf (genops.c:347)
+==5659==    by 0x490EF5F: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:745)
+==5659==    by 0x490D6E4: _IO_new_file_xsputn (fileops.c:1244)
+==5659==    by 0x490D6E4: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1197)
+==5659==    by 0x48F49A1: __vfprintf_internal (vfprintf-internal.c:1373)
+==5659==    by 0x48DFD6E: printf (printf.c:33)
+==5659==    by 0x109502: Thread (main.c:67)
+==5659==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x4863608: start_thread (pthread_create.c:477)
+==5659==    by 0x499D162: clone (clone.S:95)
+==5659==  Block was alloc'd by thread #2
+==5659== 
+==5659== 
+==5659== Process terminating with default action of signal 2 (SIGINT)
+==5659==    at 0x4864CD7: __pthread_clockjoin_ex (pthread_join_common.c:145)
+==5659==    by 0x483FB15: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x10968D: main (main.c:103)
+==5659== ----------------------------------------------------------------
+==5659== 
+==5659== Thread #2: Exiting thread still holds 1 lock
+==5659==    at 0x486E110: __lll_lock_wait (lowlevellock.c:52)
+==5659==    by 0x48660A2: pthread_mutex_lock (pthread_mutex_lock.c:80)
+==5659==    by 0x483FE78: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x10933A: Balance (main.c:31)
+==5659==    by 0x109559: Thread (main.c:72)
+==5659==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==5659==    by 0x4863608: start_thread (pthread_create.c:477)
+==5659==    by 0x499D162: clone (clone.S:95)
+==5659== 
+==5659== 
+==5659== Use --history-level=approx or =none to gain increased speed, at
+==5659== the cost of reduced accuracy of conflicting-access information
+==5659== For lists of detected and suppressed errors, rerun with: -s
+==5659== ERROR SUMMARY: 57 errors from 5 contexts (suppressed: 672 from 52)

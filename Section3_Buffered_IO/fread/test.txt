@@ -1,0 +1,6 @@
+First line from written with FD1
+First line from written with FD1
+Second line written with file PTR
+Second line written with file PTR
+First line from written with FD1
+Second line written with file PTR
