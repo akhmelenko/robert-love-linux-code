@@ -46,3 +46,4 @@ int main()
     printf("buf2 addr=%p buf2 data=%s\n", buf2, buf2);
     return 0;
 }
+// test
