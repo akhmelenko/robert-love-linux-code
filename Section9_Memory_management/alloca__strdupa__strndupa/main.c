@@ -23,14 +23,19 @@
 // and suffer from the same limitations described in alloca(3)
 // Return: returns a pointer to the duplicated string, or NULL if insufficient memory was available
 
-// alloca()
-int open_sysconf(const char *filename, int flags)
+// alloca() - free at enn of function
+int open_sysconf_alloca(const char *filename, int flags)
 {
     const char *etc = "/etc/";
-    char *path = alloca(strlen(etc) + strlen(filename) + 1);
-    strcpy(path, etc);
-    strcat(path, filename);
-    int ret = open(path, flags);
+    char *externalVarPath;
+    {
+        char *internalVarPath = alloca(strlen(etc) + strlen(filename) + 1);
+        externalVarPath = internalVarPath;
+        // allocated by alloca() not deleted until end of function
+    }
+    strcpy(externalVarPath, etc);
+    strcat(externalVarPath, filename);
+    int ret = open(externalVarPath, flags);
     if (ret == -1)
     {
         fprintf(stderr, "open() error=%d (%s)\n", errno, strerror(errno));
@@ -48,19 +53,33 @@ void duplication()
     printf("song=%s dup=%s\n", song, dup);
 }
 
+// variable length array - free at end of scope ({})
+int open_sysconf_vla(const char *filename, int flags)
+{
+    const char *etc = "/etc/";
+    char path[strlen(etc) + strlen(filename) + 1];
+    strcpy(path, etc);
+    strcat(path, filename);
+    int ret = open(path, flags);
+    if (ret == -1)
+    {
+        fprintf(stderr, "open() error=%d (%s)\n", errno, strerror(errno));
+        exit(EXIT_FAILURE);
+    }
+    return ret;
+}
+
 int main()
 {
-    int fd = open_sysconf("at.deny", O_RDONLY);
+    int fd = open_sysconf_alloca("at.deny", O_RDONLY);
     if (fd == -1)
     {
         fprintf(stderr, "open_sysconf() error\n");
         exit(EXIT_FAILURE);
     }
-
     char buf[20];
     read(fd, buf, 20);
     printf("buf=%s\n", buf);
-
     close(fd);
 
     // duplication with alloca()
@@ -71,6 +90,17 @@ int main()
     char *fullString = strdupa(buffer);
     char *partString = strndupa(buffer, 4);
     printf("buffer=%s fullString=%s partStrig=%s\n", buffer, fullString, partString);
+
+    int fd2 = open_sysconf_vla("at.deny", O_RDONLY);
+    if (fd2 == -1)
+    {
+        fprintf(stderr, "open_sysconf() error\n");
+        exit(EXIT_FAILURE);
+    }
+    char buf2[20];
+    read(fd2, buf2, 20);
+    printf("buf=%s\n", buf2);
+    close(fd2);
 
     return 0;
 }
